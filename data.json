@@ -1,6 +1,15 @@
 {
   "weeklyAmount": 10,
-  "members": ["Sanj", "Ben F", "Ben M", "Brown", "Dan", "Pope", "Skip", "Tim"],
+  "members": [
+    "Sanj",
+    "Ben F",
+    "Ben M",
+    "Brown",
+    "Dan",
+    "Pope",
+    "Skip",
+    "Tim"
+  ],
   "owed": {
     "Sanj": 0,
     "Ben F": 0,
