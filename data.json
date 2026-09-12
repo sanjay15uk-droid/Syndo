@@ -1,0 +1,17 @@
+{
+  "weeklyAmount": 10,
+  "members": ["Sanj", "Ben F", "Ben M", "Brown", "Dan", "Pope", "Skip", "Tim"],
+  "owed": {
+    "Sanj": 0,
+    "Ben F": 0,
+    "Ben M": 0,
+    "Brown": 0,
+    "Dan": 0,
+    "Pope": 0,
+    "Skip": 0,
+    "Tim": 0
+  },
+  "lastFridayAdded": "2026-09-11",
+  "payments": [],
+  "balance": 0
+}
