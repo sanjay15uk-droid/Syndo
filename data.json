@@ -11,16 +11,16 @@
     "Tim"
   ],
   "owed": {
-    "Sanj": 20,
-    "Ben F": 80,
-    "Ben M": 100,
-    "Brown": 120,
-    "Dan": 0,
+    "Sanj": 0,
+    "Ben F": 0,
+    "Ben M": 0,
+    "Brown": 0,
+    "Dan": 60,
     "Pope": 0,
     "Skip": 0,
-    "Tim": 120
+    "Tim": 0
   },
   "lastFridayAdded": "2026-09-11",
   "payments": [],
-  "balance": 2915.8
+  "balance": 0
 }
