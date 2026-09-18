@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Syndo — The Pot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0d;
+    --surface:#17171b;
+    --surface-2:#202024;
+    --line:rgba(255,255,255,0.08);
+    --gold:#ffd400;
+    --gold-dim:#c7a800;
+    --accent:#00e6a0;
+    --accent-dim:#00b17c;
+    --paid:#00e6a0;
+    --owed:#ff6b5e;
+    --text:#f5f5f7;
+    --text-dim:#9a9aa2;
+    --text-faint:#5c5c64;
+    --radius:16px;
+    --radius-sm:10px;
+    --shadow:0 6px 18px rgba(0,0,0,0.4);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);}
+  body{
+    font-family:'Space Grotesk', sans-serif;
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .app{
+    max-width:900px;
+    margin:0 auto;
+    padding:28px 20px 80px;
+  }
+
+  /* header */
+  .masthead{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    border-bottom:1px solid var(--line);
+    padding-bottom:16px;
+    margin-bottom:26px;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .masthead h1{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:32px;
+    letter-spacing:0.2px;
+    margin:0;
+    color:var(--text);
+  }
+  .masthead h1 .accent{color:var(--gold);}
+  .masthead .tag{
+    font-size:13px;
+    color:var(--text-faint);
+  }
+
+  /* pot hero */
+  .pot{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-top:3px solid var(--accent);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:28px 26px;
+    margin-bottom:28px;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+  }
+  .pot-figure .label{
+    font-size:12px;
+    color:var(--text-dim);
+    margin-bottom:4px;
+  }
+  .amount-edit{
+    display:flex;
+    align-items:baseline;
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    color:var(--gold);
+  }
+  .amount-edit .currency{
+    font-size:36px;
+    margin-right:2px;
+  }
+  .amount-edit input{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:50px;
+    line-height:1;
+    color:var(--gold);
+    background:transparent;
+    border:none;
+    border-bottom:2px dotted transparent;
+    width:220px;
+    padding:0;
+    font-variant-numeric:tabular-nums;
+  }
+  .amount-edit input:disabled{
+    opacity:1;
+    -webkit-text-fill-color:var(--gold);
+  }
+  .amount-edit input:not(:disabled){
+    border-bottom-color:var(--gold-dim);
+  }
+  .amount-edit input:focus{outline:none;}
+  .live-dot{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:12px;
+    color:var(--text-dim);
+    margin-top:6px;
+  }
+  .live-dot .dot{
+    width:7px;height:7px;
+    border-radius:50%;
+    background:var(--paid);
+  }
+  button{
+    font-family:'Space Grotesk', sans-serif;
+    cursor:pointer;
+  }
+  .btn{
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--text);
+    padding:10px 18px;
+    border-radius:999px;
+    font-size:14px;
+    font-weight:500;
+    transition:all .18s ease;
+  }
+  .btn:hover{border-color:var(--accent);color:var(--accent);}
+  .btn.primary{
+    background:var(--accent);
+    color:#0a0a0d;
+    border-color:var(--accent);
+  }
+  .btn.primary:hover{background:#33f0b8;color:#0a0a0d;}
+  .btn.small{
+    padding:6px 14px;
+    font-size:12px;
+  }
+  .btn.ghost{
+    background:transparent;
+    border-color:transparent;
+    color:var(--text-faint);
+  }
+  .btn.ghost:hover{color:var(--text);background:transparent;}
+
+  /* sections */
+  section.block{margin-bottom:34px;}
+  .block-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:12px;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .block-head h2{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:19px;
+    margin:0;
+  }
+  .block-head .meta{
+    font-size:13px;
+    color:var(--text-dim);
+  }
+
+  /* dues strip */
+  .dues-strip{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px 6px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:16px 18px;
+    font-size:14px;
+    color:var(--text-dim);
+  }
+  .dues-strip input{
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    color:var(--gold);
+    font-family:'Space Grotesk',sans-serif;
+    font-size:14px;
+    padding:6px 10px;
+    border-radius:var(--radius-sm);
+    width:54px;
+  }
+  .dues-strip input:disabled{
+    background:transparent;
+    border-color:transparent;
+    color:var(--gold);
+    padding:6px 2px;
+  }
+
+  /* owed panel */
+  .owed-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+    gap:12px;
+  }
+  .owed-card{
+    border:1px solid var(--line);
+    background:var(--surface);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:16px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .owed-card .who{font-size:14px;font-weight:500;color:var(--text);}
+  .owed-card .owed-amount-edit{
+    display:flex;
+    align-items:baseline;
+    font-family:'Fraunces', serif;
+    color:var(--owed);
+  }
+  .owed-card .owed-amount-edit.clear{color:var(--text-faint);}
+  .owed-card .owed-amount-edit.credit{color:var(--paid);}
+  .owed-card .owed-amount-edit .currency{font-size:14px;margin-right:2px;}
+  .owed-card .owed-amount-edit input{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:22px;
+    color:inherit;
+    background:transparent;
+    border:none;
+    border-bottom:1px dotted transparent;
+    width:90px;
+    padding:0;
+  }
+  .owed-card .owed-amount-edit input:not(:disabled){border-bottom-color:var(--gold-dim);}
+  .owed-card .owed-amount-edit input:disabled{-webkit-text-fill-color:inherit;opacity:1;}
+  .owed-card .owed-amount-edit input:focus{outline:none;}
+  .owed-card .owed-status{
+    font-size:11px;
+    color:var(--text-dim);
+    margin-top:-4px;
+  }
+
+  /* payment history */
+  .pay-list{
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .pay-row{
+    display:grid;
+    grid-template-columns:90px 1fr auto auto;
+    gap:12px;
+    align-items:center;
+    padding:13px 16px;
+    border-bottom:1px solid var(--line);
+    font-size:14px;
+  }
+  .pay-row:last-child{border-bottom:none;}
+  .pay-row .pay-date{color:var(--text-faint);font-size:12px;}
+  .pay-row .pay-who{color:var(--text);font-weight:500;}
+  .pay-row .pay-amt{
+    font-variant-numeric:tabular-nums;
+    font-weight:500;
+    color:var(--paid);
+    text-align:right;
+  }
+  .pay-empty{
+    padding:18px 16px;
+    color:var(--text-faint);
+    font-size:14px;
+  }
+  .rm-x{
+    font-size:11px;
+    color:var(--text-faint);
+    cursor:pointer;
+  }
+  .rm-x:hover{color:var(--owed);}
+
+  /* modal / overlay */
+  .overlay{
+    position:fixed;inset:0;
+    background:rgba(6,16,10,0.6);
+    backdrop-filter:blur(2px);
+    display:flex;align-items:center;justify-content:center;
+    padding:20px;
+    z-index:50;
+    overflow-y:auto;
+  }
+  .hidden{display:none !important;}
+  .modal{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:0 12px 32px rgba(4,20,12,0.4);
+    padding:24px;
+    width:100%;
+    max-width:360px;
+    margin:auto;
+  }
+  .modal h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    margin:0 0 6px;
+    font-size:18px;
+  }
+  .modal label{
+    display:block;
+    font-size:12px;
+    color:var(--text-dim);
+    margin-bottom:5px;
+    margin-top:12px;
+  }
+  .modal input, .modal select{
+    width:100%;
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    color:var(--text);
+    padding:10px 12px;
+    border-radius:var(--radius-sm);
+    font-family:'Space Grotesk',sans-serif;
+    font-size:14px;
+  }
+  .modal .modal-actions{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+    justify-content:flex-end;
+  }
+  .modal .switch-link{
+    display:block;
+    margin-top:16px;
+    font-size:12px;
+    color:var(--text-dim);
+    text-decoration:underline;
+    cursor:pointer;
+  }
+  .modal .switch-link:hover{color:var(--gold);}
+  .toast{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    background:var(--surface-2);
+    border:1px solid var(--gold-dim);
+    color:var(--text);
+    padding:10px 18px;
+    border-radius:var(--radius);
+    font-size:13px;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .25s ease;
+    z-index:60;
+    max-width:90vw;
+    text-align:center;
+  }
+  .toast.show{opacity:1;}
+  .footnote{
+    color:var(--text-faint);
+    font-size:12px;
+    margin-top:6px;
+  }
+  @media (max-width:520px){
+    .amount-edit input{font-size:40px;width:170px;}
+    .amount-edit .currency{font-size:30px;}
+    .masthead h1{font-size:26px;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="masthead">
+    <h1>Syn<span class="accent">do</span></h1>
+    <div style="display:flex;align-items:center;gap:14px;">
+      <div class="tag">the syndicate ledger</div>
+      <button class="btn small" id="lockBtn">🔒 Locked</button>
+    </div>
+  </div>
+
+  <section class="pot">
+    <div class="pot-figure">
+      <div class="label">Starling account</div>
+      <div class="amount-edit">
+        <span class="currency">£</span><input type="number" id="balanceInput" min="0" step="0.01" inputmode="decimal" disabled>
+      </div>
+      <div class="live-dot"><span class="dot"></span>live balance</div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2>Weekly dues</h2>
+    </div>
+    <div class="dues-strip">
+      <span>£</span><input type="number" inputmode="decimal" id="weeklyAmountInput" min="0" step="1" disabled>
+      <span>gets added to everyone's total automatically, every Friday.</span>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2>Money owed</h2>
+      <div class="meta" id="totalOwedMeta"></div>
+    </div>
+    <div class="owed-grid" id="owedGrid"></div>
+    <div class="footnote" id="ownedHint">Type straight into a number to correct it, or use "− paid" to subtract what they just gave you. Pay in more than they owe and it flips to credit automatically — handy for anyone paying ahead.</div>
+  </section>
+
+  <section class="block">
+    <div class="block-head">
+      <h2>Payment history</h2>
+    </div>
+    <div class="pay-list" id="payList"></div>
+  </section>
+
+  <div class="footnote" id="footnote">Anyone with this link can see the ledger live. Only you can edit it.</div>
+</div>
+
+<div class="overlay hidden" id="payOverlay">
+  <div class="modal">
+    <h3 id="payModalTitle">Log a payment</h3>
+    <label for="payAmount">Amount paid (£)</label>
+    <input type="number" inputmode="decimal" id="payAmount" min="0" step="0.01" placeholder="0.00">
+    <div class="modal-actions">
+      <button class="btn ghost" id="payCancel">Cancel</button>
+      <button class="btn primary" id="payConfirm">Subtract</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay hidden" id="authOverlay">
+  <div class="modal">
+    <h3 id="authTitle">Enter your PIN</h3>
+
+    <div id="authPinFields">
+      <label for="pinInput">PIN</label>
+      <input type="password" inputmode="numeric" id="pinInput" placeholder="e.g. 4 digits">
+    </div>
+
+    <div id="authSetupFields" class="hidden">
+      <label for="ghOwner">GitHub username</label>
+      <input type="text" id="ghOwner" placeholder="e.g. sanjay15uk-droid">
+      <label for="ghRepo">Repository name</label>
+      <input type="text" id="ghRepo" placeholder="e.g. Syndo">
+      <label for="ghBranch">Branch</label>
+      <input type="text" id="ghBranch" value="main">
+      <label for="ghToken">Personal access token</label>
+      <input type="password" id="ghToken" placeholder="github_pat_…">
+      <label for="newPin">Choose a PIN</label>
+      <input type="password" inputmode="numeric" id="newPin" placeholder="e.g. 4 digits">
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn ghost" id="authCancel">Cancel</button>
+      <button class="btn primary" id="authConfirm">Unlock</button>
+    </div>
+    <div class="switch-link hidden" id="authSwitchLink">Set up GitHub connection on this device</div>
+    <div class="switch-link hidden" id="authForget">Forget this device's connection</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  const $ = (id) => document.getElementById(id);
+  const GH_CONFIG_KEY = 'syndo-gh-config';
+  const DEFAULT_MEMBERS = ["Sanj","Ben F","Ben M","Brown","Dan","Pope","Skip","Tim"];
+
+  // ---- date helpers ----
+  function todayISO(){ return new Date().toISOString().slice(0,10); }
+  function addDaysISO(iso, n){
+    const d = new Date(iso + 'T00:00:00');
+    d.setDate(d.getDate() + n);
+    return d.toISOString().slice(0,10);
+  }
+  function mostRecentFridayISO(fromDateStr){
+    const d = fromDateStr ? new Date(fromDateStr + 'T00:00:00') : new Date();
+    const day = d.getDay();
+    const diff = (day - 5 + 7) % 7;
+    d.setDate(d.getDate() - diff);
+    return d.toISOString().slice(0,10);
+  }
+  function fmtDate(iso){
+    const d = new Date(iso + 'T00:00:00');
+    return d.toLocaleDateString('en-GB',{day:'2-digit',month:'2-digit',year:'2-digit'});
+  }
+  function fmtGBP(n){
+    const sign = n < 0 ? '-' : '';
+    return sign + '£' + Math.abs(n).toLocaleString('en-GB',{minimumFractionDigits: (Math.abs(n)%1===0?0:2), maximumFractionDigits:2});
+  }
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  function b64EncodeUnicode(str){
+    return btoa(unescape(encodeURIComponent(str)));
+  }
+
+  let state = null;
+  let unlocked = false;
+  let ghConfig = null;
+  let authMode = 'pin';
+
+  function defaultState(){
+    const owed = {};
+    DEFAULT_MEMBERS.forEach(m => owed[m] = 0);
+    return {
+      weeklyAmount: 10,
+      members: DEFAULT_MEMBERS.slice(),
+      owed: owed,
+      lastFridayAdded: mostRecentFridayISO(),
+      payments: [],
+      balance: 0
+    };
+  }
+
+  function storageAvailable(){
+    try{
+      const k = '__syndo_test__';
+      localStorage.setItem(k, '1');
+      localStorage.removeItem(k);
+      return true;
+    }catch(e){
+      console.error('localStorage unavailable:', e);
+      return false;
+    }
+  }
+  function loadGhConfig(){
+    try{ return JSON.parse(localStorage.getItem(GH_CONFIG_KEY)); }catch(e){ return null; }
+  }
+  function saveGhConfig(cfg){
+    try{
+      localStorage.setItem(GH_CONFIG_KEY, JSON.stringify(cfg));
+      return true;
+    }catch(e){
+      console.error('localStorage save failed:', e);
+      return false;
+    }
+  }
+
+  // Adds £weeklyAmount to every member's running total once for each Friday
+  // that's passed since the last time this ran — so it catches up whenever
+  // anyone opens the app, even if a few Fridays went by unopened.
+  function addDuesIfNeeded(){
+    const target = mostRecentFridayISO();
+    if (!state.lastFridayAdded){
+      state.lastFridayAdded = target;
+      return false;
+    }
+    let changed = false;
+    let cursor = state.lastFridayAdded;
+    while (cursor < target){
+      cursor = addDaysISO(cursor, 7);
+      state.members.forEach(m => {
+        state.owed[m] = Number(state.owed[m] || 0) + Number(state.weeklyAmount);
+      });
+      state.lastFridayAdded = cursor;
+      changed = true;
+    }
+    return changed;
+  }
+
+  // ---- data: read from the published data.json, write via GitHub API ----
+  async function fetchRemoteState(){
+    const res = await fetch('./data.json?t=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) throw new Error('fetch failed: ' + res.status);
+    return await res.json();
+  }
+
+  async function githubGetFileSha(){
+    const url = `https://api.github.com/repos/${ghConfig.owner}/${ghConfig.repo}/contents/data.json?ref=${encodeURIComponent(ghConfig.branch || 'main')}`;
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${ghConfig.token}`, Accept: 'application/vnd.github+json' }
+    });
+    if (!res.ok) throw new Error('GitHub read failed: ' + res.status);
+    const data = await res.json();
+    return data.sha;
+  }
+
+  async function githubSaveState(){
+    if (!ghConfig || !ghConfig.token){ return; }
+    let sha;
+    try{
+      sha = await githubGetFileSha();
+    }catch(e){
+      console.error('Reading current file failed:', e);
+      showToast('Save failed at read step — ' + (e.name || 'Error') + ': ' + (e.message || 'unknown'), 7000);
+      return;
+    }
+    try{
+      const res = await fetch(`https://api.github.com/repos/${ghConfig.owner}/${ghConfig.repo}/contents/data.json`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${ghConfig.token}`,
+          Accept: 'application/vnd.github+json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: 'Update Syndo data',
+          content: b64EncodeUnicode(JSON.stringify(state, null, 2)),
+          sha: sha,
+          branch: ghConfig.branch || 'main'
+        })
+      });
+      if (!res.ok){
+        const errBody = await res.text();
+        let detail = String(res.status);
+        try{
+          const parsed = JSON.parse(errBody);
+          if (parsed && parsed.message) detail += ': ' + parsed.message;
+        }catch(_e){ /* body wasn't JSON, ignore */ }
+        console.error('GitHub write failed:', res.status, errBody);
+        showToast('Save failed — ' + detail, 7000);
+      }
+    }catch(e){
+      console.error('Writing new file failed:', e);
+      showToast('Save failed at write step — ' + (e.name || 'Error') + ': ' + (e.message || 'unknown'), 7000);
+    }
+  }
+
+  async function save(){
+    await githubSaveState();
+  }
+
+  function showToast(msg, duration){
+    const t = $('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'), duration || 2200);
+  }
+
+  // ---- render ----
+  function render(){
+    renderPot();
+    renderDues();
+    renderOwed();
+    renderPayments();
+    renderLockState();
+  }
+
+  function renderLockState(){
+    const lockBtn = $('lockBtn');
+    lockBtn.textContent = unlocked ? '🔓 Editing' : '🔒 Locked';
+    lockBtn.classList.toggle('primary', unlocked);
+
+    $('weeklyAmountInput').disabled = !unlocked;
+    $('balanceInput').disabled = !unlocked;
+    document.querySelectorAll('.owed-input').forEach(i => i.disabled = !unlocked);
+    document.querySelectorAll('.log-pay-btn').forEach(b => b.style.display = unlocked ? '' : 'none');
+    document.querySelectorAll('.rm-x[data-pay]').forEach(x => x.style.display = unlocked ? '' : 'none');
+    $('ownedHint').style.display = unlocked ? '' : 'none';
+
+    $('footnote').textContent = unlocked
+      ? "Editing unlocked for this session — tap 🔓 to lock it again before you close the tab."
+      : "Anyone with this link can see the ledger live. Only you can edit it — tap 🔒 to unlock.";
+  }
+
+  function renderPot(){
+    const balanceInput = $('balanceInput');
+    if (document.activeElement !== balanceInput){
+      balanceInput.value = state.balance;
+    }
+  }
+
+  function renderDues(){
+    const weeklyInput = $('weeklyAmountInput');
+    if (document.activeElement !== weeklyInput) weeklyInput.value = state.weeklyAmount;
+  }
+
+  function owedStatus(amt){
+    const weekly = Number(state.weeklyAmount) || 0;
+    if (amt > 0){
+      const cls = 'debt';
+      const wks = weekly > 0 ? amt / weekly : null;
+      const text = wks && wks >= 1 ? `behind ${fmtWeeks(wks)}` : 'owes';
+      return { cls, text };
+    }
+    if (amt < 0){
+      const wks = weekly > 0 ? (-amt) / weekly : null;
+      const text = wks ? `${fmtWeeks(wks)} in credit` : 'in credit';
+      return { cls: 'credit', text };
+    }
+    return { cls: 'clear', text: 'square' };
+  }
+  function fmtWeeks(n){
+    const rounded = Math.round(n * 10) / 10;
+    const label = Number.isInteger(rounded) ? rounded : rounded.toFixed(1);
+    return `${label} wk${rounded === 1 ? '' : 's'}`;
+  }
+
+  function renderOwed(){
+    // If you're mid-edit in any of these boxes, leave the whole grid alone —
+    // rebuilding it would wipe out anything you've typed but not yet tabbed away from.
+    if (document.activeElement && document.activeElement.classList.contains('owed-input')) return;
+    const grid = $('owedGrid');
+    const entries = state.members.map(m => [m, Number(state.owed[m] || 0)]);
+    if (!entries.length){
+      grid.innerHTML = '<div class="footnote">No members on the list.</div>';
+      $('totalOwedMeta').textContent = '';
+      return;
+    }
+    entries.sort((a,b) => b[1]-a[1]);
+    grid.innerHTML = entries.map(([m, amt]) => {
+      const { cls, text } = owedStatus(amt);
+      return `
+      <div class="owed-card">
+        <span class="who">${escapeHtml(m)}</span>
+        <div class="owed-amount-edit ${cls}">
+          <span class="currency">£</span><input type="number" inputmode="decimal" class="owed-input" data-member="${escapeHtml(m)}" step="0.01" value="${amt}" ${unlocked?'':'disabled'}>
+        </div>
+        <div class="owed-status">${text}</div>
+        <button class="btn small log-pay-btn" data-member="${escapeHtml(m)}" style="display:${unlocked?'':'none'}">− paid</button>
+      </div>`;
+    }).join('');
+    const totalOutstanding = entries.reduce((s,[,a]) => s + Math.max(0,a), 0);
+    $('totalOwedMeta').textContent = totalOutstanding > 0 ? `${fmtGBP(totalOutstanding)} outstanding` : 'everyone squared up';
+  }
+
+  function renderPayments(){
+    const list = $('payList');
+    if (!state.payments.length){
+      list.innerHTML = '<div class="pay-empty">No payments logged yet.</div>';
+      return;
+    }
+    const sorted = [...state.payments].sort((a,b) => b.date.localeCompare(a.date));
+    list.innerHTML = sorted.map(p => `
+      <div class="pay-row">
+        <span class="pay-date">${fmtDate(p.date)}</span>
+        <span class="pay-who">${escapeHtml(p.member)}</span>
+        <span class="pay-amt">−${fmtGBP(p.amount)}</span>
+        <span class="rm-x" data-pay="${p.id}" title="Remove" style="display:${unlocked?'':'none'}">✕</span>
+      </div>
+    `).join('');
+  }
+
+  // ---- init & polling ----
+  async function init(){
+    if (!storageAvailable()){
+      showToast('This browser is blocking saved logins here (Private Browsing or a Safari setting) — the connection won\'t be remembered', 8000);
+    }
+    ghConfig = loadGhConfig();
+    try{
+      state = await fetchRemoteState();
+    }catch(e){
+      state = defaultState();
+    }
+    if (typeof state.balance !== 'number') state.balance = 0;
+    if (!Array.isArray(state.payments)) state.payments = [];
+    if (!state.owed || typeof state.owed !== 'object') state.owed = {};
+    state.members.forEach(m => { if (typeof state.owed[m] !== 'number') state.owed[m] = 0; });
+    const added = addDuesIfNeeded();
+    render();
+    if (added && ghConfig && ghConfig.token){ await save(); }
+    startPolling();
+  }
+
+  function authModalOpen(){ return !$('authOverlay').classList.contains('hidden'); }
+  function payModalOpen(){ return !$('payOverlay').classList.contains('hidden'); }
+
+  function startPolling(){
+    async function poll(){
+      // While you're unlocked and editing, your own device is the source of
+      // truth — pulling from GitHub here is what was overwriting in-progress
+      // edits (including ones already typed but not yet saved). Only poll
+      // when this device is in view-only mode.
+      if (unlocked) return;
+      if (authModalOpen() || payModalOpen()) return;
+      try{
+        const fresh = await fetchRemoteState();
+        if (typeof fresh.balance !== 'number') fresh.balance = 0;
+        if (!Array.isArray(fresh.payments)) fresh.payments = [];
+        if (!fresh.owed || typeof fresh.owed !== 'object') fresh.owed = {};
+        state = fresh;
+        state.members.forEach(m => { if (typeof state.owed[m] !== 'number') state.owed[m] = 0; });
+        const prevStr = JSON.stringify(state);
+        const added = addDuesIfNeeded();
+        if (added && ghConfig && ghConfig.token){ await save(); }
+        if (added || JSON.stringify(state) !== prevStr){ render(); }
+      }catch(e){ /* keep showing last known state */ }
+    }
+    setInterval(poll, 20000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) poll(); });
+  }
+
+  // ---- events ----
+  $('weeklyAmountInput').addEventListener('change', async (e) => {
+    if (!unlocked) return;
+    const val = Number(e.target.value);
+    state.weeklyAmount = isNaN(val) || val < 0 ? 0 : val;
+    render();
+    await save();
+  });
+
+  document.addEventListener('change', async (e) => {
+    const owedInput = e.target.closest('.owed-input');
+    if (owedInput){
+      if (!unlocked) return;
+      const m = owedInput.dataset.member;
+      const val = Number(owedInput.value);
+      state.owed[m] = isNaN(val) ? 0 : val;
+      render();
+      await save();
+    }
+  });
+
+  let balanceSaveTimer = null;
+  $('balanceInput').addEventListener('input', (e) => {
+    if (!unlocked) return;
+    const val = Number(e.target.value);
+    state.balance = isNaN(val) ? 0 : val;
+    clearTimeout(balanceSaveTimer);
+    balanceSaveTimer = setTimeout(save, 600);
+  });
+  $('balanceInput').addEventListener('blur', async () => {
+    if (!unlocked) return;
+    clearTimeout(balanceSaveTimer);
+    await save();
+  });
+
+  // payment logging
+  let payTargetMember = null;
+  document.addEventListener('click', async (e) => {
+    const logBtn = e.target.closest('.log-pay-btn');
+    if (logBtn){
+      if (!unlocked) return;
+      payTargetMember = logBtn.dataset.member;
+      $('payModalTitle').textContent = `Log a payment from ${payTargetMember}`;
+      $('payAmount').value = '';
+      $('payOverlay').classList.remove('hidden');
+      $('payAmount').focus();
+      return;
+    }
+    const rmPay = e.target.closest('.rm-x[data-pay]');
+    if (rmPay){
+      if (!unlocked) return;
+      state.payments = state.payments.filter(p => p.id !== rmPay.dataset.pay);
+      render();
+      await save();
+      return;
+    }
+  });
+  $('payCancel').addEventListener('click', () => $('payOverlay').classList.add('hidden'));
+  $('payOverlay').addEventListener('click', (e) => { if (e.target.id === 'payOverlay') $('payOverlay').classList.add('hidden'); });
+  $('payConfirm').addEventListener('click', async () => {
+    const amount = Number($('payAmount').value);
+    if (!amount || amount <= 0){ showToast('Enter an amount first'); return; }
+    state.owed[payTargetMember] = Number(state.owed[payTargetMember] || 0) - amount;
+    state.payments.push({ id: uid(), member: payTargetMember, amount, date: todayISO() });
+    $('payOverlay').classList.add('hidden');
+    render();
+    await save();
+  });
+
+  // ---- auth: PIN gate in front of a per-device GitHub connection ----
+  function openAuthModal(mode){
+    authMode = mode;
+    const pinFields = $('authPinFields');
+    const setupFields = $('authSetupFields');
+    const switchLink = $('authSwitchLink');
+    const forgetLink = $('authForget');
+
+    if (mode === 'pin'){
+      $('authTitle').textContent = 'Enter your PIN';
+      pinFields.classList.remove('hidden');
+      setupFields.classList.add('hidden');
+      $('pinInput').value = '';
+      switchLink.textContent = 'Set up GitHub connection on this device';
+      switchLink.classList.remove('hidden');
+      forgetLink.classList.remove('hidden');
+    } else {
+      $('authTitle').textContent = 'Connect this device';
+      pinFields.classList.add('hidden');
+      setupFields.classList.remove('hidden');
+      $('ghOwner').value = (ghConfig && ghConfig.owner) || '';
+      $('ghRepo').value = (ghConfig && ghConfig.repo) || '';
+      $('ghBranch').value = (ghConfig && ghConfig.branch) || 'main';
+      $('ghToken').value = '';
+      $('newPin').value = '';
+      if (ghConfig){
+        switchLink.textContent = 'Already set up? Enter PIN instead';
+        switchLink.classList.remove('hidden');
+      } else {
+        switchLink.classList.add('hidden');
+      }
+      forgetLink.classList.add('hidden');
+    }
+    $('authOverlay').classList.remove('hidden');
+  }
+
+  $('lockBtn').addEventListener('click', () => {
+    if (unlocked){ unlocked = false; render(); return; }
+    openAuthModal(ghConfig && ghConfig.token && ghConfig.pin ? 'pin' : 'setup');
+  });
+  $('authCancel').addEventListener('click', () => $('authOverlay').classList.add('hidden'));
+  $('authOverlay').addEventListener('click', (e) => { if (e.target.id === 'authOverlay') $('authOverlay').classList.add('hidden'); });
+  $('authSwitchLink').addEventListener('click', () => openAuthModal(authMode === 'pin' ? 'setup' : 'pin'));
+  $('authForget').addEventListener('click', () => {
+    localStorage.removeItem(GH_CONFIG_KEY);
+    ghConfig = null;
+    unlocked = false;
+    $('authOverlay').classList.add('hidden');
+    showToast('Connection forgotten on this device');
+    render();
+  });
+  $('pinInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('authConfirm').click(); });
+  $('authConfirm').addEventListener('click', async () => {
+    if (authMode === 'pin'){
+      const entered = $('pinInput').value.trim();
+      if (!entered){ showToast('Enter your PIN'); return; }
+      if (ghConfig && entered === ghConfig.pin){
+        unlocked = true;
+        $('authOverlay').classList.add('hidden');
+        render();
+      } else {
+        showToast('Wrong PIN');
+      }
+      return;
+    }
+    const owner = $('ghOwner').value.trim();
+    const repo = $('ghRepo').value.trim();
+    const branch = $('ghBranch').value.trim() || 'main';
+    const token = $('ghToken').value.trim();
+    const pin = $('newPin').value.trim();
+    if (!owner || !repo || !token || !pin){ showToast('Fill in every field'); return; }
+    ghConfig = { owner, repo, branch, token, pin };
+    const saved = saveGhConfig(ghConfig);
+    unlocked = true;
+    $('authOverlay').classList.add('hidden');
+    if (saved){
+      showToast('Device connected');
+    } else {
+      showToast('Connected for now, but this browser won\'t remember it — storage is blocked here', 7000);
+    }
+    render();
+  });
+
+  init();
+})();
+</script>
+</body>
+</html>
