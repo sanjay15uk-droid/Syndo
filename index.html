@@ -598,7 +598,8 @@
     return data.sha;
   }
 
-  async function githubSaveState(){
+  async function githubSaveState(attempt){
+    attempt = attempt || 1;
     if (!ghConfig || !ghConfig.token){ return; }
     let sha;
     try{
@@ -624,6 +625,13 @@
         })
       });
       if (!res.ok){
+        // 409 means another save landed in between fetching the sha and
+        // writing — near-instant if two edits happen back to back. Retry a
+        // couple of times with a fresh sha before bothering the user with it.
+        if (res.status === 409 && attempt < 3){
+          await githubSaveState(attempt + 1);
+          return;
+        }
         const errBody = await res.text();
         let detail = String(res.status);
         try{
@@ -639,8 +647,13 @@
     }
   }
 
-  async function save(){
-    await githubSaveState();
+  // Chains every save onto the previous one, so two edits fired close
+  // together (e.g. tabbing quickly between fields) write one after another
+  // instead of racing each other and tripping a 409.
+  let saveQueue = Promise.resolve();
+  function save(){
+    saveQueue = saveQueue.then(() => githubSaveState()).catch(() => {});
+    return saveQueue;
   }
 
   function showToast(msg, duration){
