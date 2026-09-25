@@ -16,7 +16,7 @@
     "Ben M": 110,
     "Brown": 130,
     "Dan": 70,
-    "Pope": 10,
+    "Pope": -30,
     "Skip": 20,
     "Tim": 70
   },
@@ -50,6 +50,12 @@
       "id": "mughtv4nie2x6",
       "member": "Ben F",
       "amount": 10,
+      "date": "2026-09-25"
+    },
+    {
+      "id": "mugkc1c6gn8gc",
+      "member": "Pope",
+      "amount": 40,
       "date": "2026-09-25"
     }
   ],
