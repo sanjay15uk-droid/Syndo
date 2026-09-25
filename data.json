@@ -17,7 +17,7 @@
     "Brown": 130,
     "Dan": 70,
     "Pope": -10,
-    "Skip": 20,
+    "Skip": 0,
     "Tim": 70
   },
   "lastFridayAdded": "2026-09-29",
@@ -56,6 +56,12 @@
       "id": "mugkc1c6gn8gc",
       "member": "Pope",
       "amount": 40,
+      "date": "2026-09-25"
+    },
+    {
+      "id": "mugl2nawg2395",
+      "member": "Skip",
+      "amount": 20,
       "date": "2026-09-25"
     }
   ],
