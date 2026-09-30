@@ -16,7 +16,7 @@
     "Ben M": 110,
     "Brown": 130,
     "Dan": 70,
-    "Pope": -10,
+    "Pope": -50,
     "Skip": 20,
     "Tim": 70
   },
@@ -63,6 +63,12 @@
       "member": "Sanj",
       "amount": 20,
       "date": "2026-09-25"
+    },
+    {
+      "id": "munqegyj4ayzu",
+      "member": "Pope",
+      "amount": 40,
+      "date": "2026-09-30"
     }
   ],
   "balance": 3160
