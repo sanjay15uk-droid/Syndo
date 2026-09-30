@@ -13,7 +13,7 @@
   "owed": {
     "Sanj": 10,
     "Ben F": 60,
-    "Ben M": 110,
+    "Ben M": -10,
     "Brown": 130,
     "Dan": 70,
     "Pope": -50,
@@ -68,6 +68,12 @@
       "id": "munqegyj4ayzu",
       "member": "Pope",
       "amount": 40,
+      "date": "2026-09-30"
+    },
+    {
+      "id": "munqk8oa1bkoz",
+      "member": "Ben M",
+      "amount": 120,
       "date": "2026-09-30"
     }
   ],
