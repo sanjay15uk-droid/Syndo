@@ -12,7 +12,7 @@
   ],
   "owed": {
     "Sanj": 20,
-    "Ben F": 70,
+    "Ben F": 60,
     "Ben M": 0,
     "Brown": 140,
     "Dan": 80,
@@ -75,6 +75,12 @@
       "member": "Ben M",
       "amount": 120,
       "date": "2026-09-30"
+    },
+    {
+      "id": "muqjw907xoj06",
+      "member": "Ben F",
+      "amount": 10,
+      "date": "2026-10-02"
     }
   ],
   "balance": 3290
