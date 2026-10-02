@@ -11,16 +11,16 @@
     "Tim"
   ],
   "owed": {
-    "Sanj": 10,
-    "Ben F": 60,
-    "Ben M": -10,
-    "Brown": 130,
-    "Dan": 70,
-    "Pope": -50,
-    "Skip": 20,
-    "Tim": 70
+    "Sanj": 20,
+    "Ben F": 70,
+    "Ben M": 0,
+    "Brown": 140,
+    "Dan": 80,
+    "Pope": -40,
+    "Skip": 30,
+    "Tim": 80
   },
-  "lastFridayAdded": "2026-09-29",
+  "lastFridayAdded": "2026-10-05",
   "payments": [
     {
       "id": "mtzhi8lbglh3l",
