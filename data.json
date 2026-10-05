@@ -14,7 +14,7 @@
     "Sanj": 0,
     "Ben F": 10,
     "Ben M": 0,
-    "Brown": 140,
+    "Brown": -60,
     "Dan": 20,
     "Pope": -40,
     "Skip": 0,
@@ -110,6 +110,12 @@
       "id": "muvd1bdivg8d8",
       "member": "Sanj",
       "amount": 20,
+      "date": "2026-10-05"
+    },
+    {
+      "id": "muvhwyjq2do07",
+      "member": "Brown",
+      "amount": 200,
       "date": "2026-10-05"
     }
   ],
