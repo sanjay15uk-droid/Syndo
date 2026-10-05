@@ -11,7 +11,7 @@
     "Tim"
   ],
   "owed": {
-    "Sanj": 20,
+    "Sanj": 0,
     "Ben F": 10,
     "Ben M": 0,
     "Brown": 140,
@@ -105,7 +105,13 @@
       "member": "Tim",
       "amount": 60,
       "date": "2026-10-05"
+    },
+    {
+      "id": "muvd1bdivg8d8",
+      "member": "Sanj",
+      "amount": 20,
+      "date": "2026-10-05"
     }
   ],
-  "balance": 3430
+  "balance": 3450
 }
