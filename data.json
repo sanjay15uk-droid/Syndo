@@ -15,7 +15,7 @@
     "Ben F": 60,
     "Ben M": 0,
     "Brown": 140,
-    "Dan": 80,
+    "Dan": 20,
     "Pope": -40,
     "Skip": 30,
     "Tim": 80
@@ -81,6 +81,12 @@
       "member": "Ben F",
       "amount": 10,
       "date": "2026-10-02"
+    },
+    {
+      "id": "muv4fq5wq2b09",
+      "member": "Dan",
+      "amount": 60,
+      "date": "2026-10-05"
     }
   ],
   "balance": 3290
