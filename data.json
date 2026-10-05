@@ -18,7 +18,7 @@
     "Dan": 20,
     "Pope": -40,
     "Skip": 0,
-    "Tim": 80
+    "Tim": 20
   },
   "lastFridayAdded": "2026-10-05",
   "payments": [
@@ -98,6 +98,12 @@
       "id": "muv596r6m2gaq",
       "member": "Ben F",
       "amount": 50,
+      "date": "2026-10-05"
+    },
+    {
+      "id": "muv5ken1yymre",
+      "member": "Tim",
+      "amount": 60,
       "date": "2026-10-05"
     }
   ],
