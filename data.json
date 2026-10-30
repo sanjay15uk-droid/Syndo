@@ -16,7 +16,7 @@
     "Ben M": 0,
     "Brown": -20,
     "Dan": 60,
-    "Pope": 0,
+    "Pope": -50,
     "Skip": 0,
     "Tim": 60
   },
@@ -140,6 +140,12 @@
       "id": "mvuorwv5ed843",
       "member": "Skip",
       "amount": 40,
+      "date": "2026-10-30"
+    },
+    {
+      "id": "mvurb2n4ireho",
+      "member": "Pope",
+      "amount": 50,
       "date": "2026-10-30"
     }
   ],
