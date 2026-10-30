@@ -17,7 +17,7 @@
     "Brown": -20,
     "Dan": 60,
     "Pope": 0,
-    "Skip": 40,
+    "Skip": 0,
     "Tim": 60
   },
   "lastFridayAdded": "2026-10-30",
@@ -133,6 +133,12 @@
     {
       "id": "mvunw5l1xjjxs",
       "member": "Ben M",
+      "amount": 40,
+      "date": "2026-10-30"
+    },
+    {
+      "id": "mvuorwv5ed843",
+      "member": "Skip",
       "amount": 40,
       "date": "2026-10-30"
     }
