@@ -11,7 +11,7 @@
     "Tim"
   ],
   "owed": {
-    "Sanj": 40,
+    "Sanj": -10,
     "Ben F": 20,
     "Ben M": 0,
     "Brown": -20,
@@ -147,6 +147,12 @@
       "member": "Pope",
       "amount": 50,
       "date": "2026-10-30"
+    },
+    {
+      "id": "mw436cm8f955v",
+      "member": "Sanj",
+      "amount": 50,
+      "date": "2026-11-05"
     }
   ],
   "balance": 3805
